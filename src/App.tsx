@@ -1,4 +1,4 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
+import { Authenticated, GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 
@@ -9,12 +9,14 @@ import { authProvider, dataProvider, liveProvider } from "./providers";
 import { Home, ForgotPassword, Login, Register } from "./pages";
 
 import routerBindings, {
+  CatchAllNavigate,
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router-v6";
 import { App as AntdApp } from "antd";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import Layout from "./components/layout";
  
 
 
@@ -40,12 +42,23 @@ function App() {
                   liveMode: "auto",
                 }}
               >
-                <Routes>
-                  <Route index element={<WelcomePage />} />
-                  <Route index element={<Home />} />
+                <Routes>                  
                   <Route path="/register" element={<Register />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route
+                    element={
+                    <Authenticated 
+                    key="authenticated-layout"
+                    fallback={<CatchAllNavigate to="/login" />} 
+                    >
+                      <Layout>
+                        <Outlet />
+                      </Layout>
+                      </Authenticated>
+                    }>
+                      <Route index element={<Home />} />
+                  </Route>
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
