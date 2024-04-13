@@ -5,7 +5,8 @@ import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
-import { dataProvider, liveProvider } from "./providers";
+import { authProvider, dataProvider, liveProvider } from "./providers";
+import { Home, ForgotPassword, Login, Register } from "./pages";
 
 import routerBindings, {
   DocumentTitleHandler,
@@ -26,11 +27,11 @@ function App() {
           <AntdApp>
             <DevtoolsProvider>
               <Refine
-                //dataProvider={dataProvider(gqlClient)}
-                //liveProvider={liveProvider(wsClient)}
+                dataProvider={dataProvider}
+                liveProvider={liveProvider}
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
-                //authProvider={}
+                authProvider={authProvider}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
@@ -41,6 +42,10 @@ function App() {
               >
                 <Routes>
                   <Route index element={<WelcomePage />} />
+                  <Route index element={<Home />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/forgot-password" element={<ForgotPassword />} />
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />
