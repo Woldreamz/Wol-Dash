@@ -60,6 +60,11 @@ const CurrentUser = () => {
           style={{ cursor: 'pointer' }}
         />
       </Popover>
+      {user && (
+      <AccountSettings
+      
+      />
+      )}
     </>
   )
 }
