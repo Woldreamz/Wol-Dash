@@ -38,14 +38,17 @@ const UpcomingEvents = () => {
            itemLayout='horizontal'
            dataSource={[]}
            renderItem={(item) => {
+            const renderDate = getDate(item.startDate, item.endDate)
+
             return (
                 <List.Item>
                     <List.Item.Meta />
                         avatar={<Badge color={item.color} />}
-                        title={<Text size="xs"></Text>}
+                        title={<Text size="xs">{renderDate}</Text>}
+                        description={<Text ellipsis={{ tooltip: true }}></Text>}
                 </List.Item>
             )
-           }
+           }}
         >
 
         </List>
