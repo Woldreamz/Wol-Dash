@@ -1,10 +1,11 @@
 import { CalculatorOutlined } from '@ant-design/icons'
-import { Card, List } from 'antd'
+import { Badge, Card, List } from 'antd'
 import React, { useState } from 'react'
 import { Text } from '../text'
+import UpcomingEventsSkeleton from '../skeleton/upcoming-events'
 
 const UpcomingEvents = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Card 
@@ -30,11 +31,22 @@ const UpcomingEvents = () => {
           dataSource={Array.from({ length: 5 }).map(( _, index) => ({
             id: index,
           }))}
-        >
-
-        </List>
+          renderItem={() => <UpcomingEventsSkeleton />}
+        />
       ) : (
-        <List>
+        <List
+           itemLayout='horizontal'
+           dataSource={[]}
+           renderItem={(item) => {
+            return (
+                <List.Item>
+                    <List.Item.Meta />
+                        avatar={<Badge color={item.color} />}
+                        title={<Text size="xs"></Text>}
+                </List.Item>
+            )
+           }
+        >
 
         </List>
       )}
